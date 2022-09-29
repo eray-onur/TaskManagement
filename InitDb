@@ -1,0 +1,20 @@
+-- Table: public.tasks
+
+-- DROP TABLE IF EXISTS public.tasks;
+
+CREATE TABLE IF NOT EXISTS public.tasks
+(
+    id uuid NOT NULL,
+    is_deleted boolean NOT NULL default TRUE,
+    created_date timestamp without time zone NOT NULL,
+    required_by_date timestamp without time zone,
+    description text COLLATE pg_catalog."default",
+    task_status smallint NOT NULL DEFAULT 1,
+    type smallint NOT NULL,
+    assigned_to uuid,
+    next_action_date timestamp without time zone,
+    CONSTRAINT tasks_pkey PRIMARY KEY (id)
+);
+
+ALTER TABLE IF EXISTS public.tasks
+    OWNER to postgres;
