@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+// Overriding the nonsensical margin in indigo-pink theme.
+.mat-h2,
+.mat-title,
+.mat-typography .mat-h2,
+.mat-typography .mat-title,
+.mat-typography h2 {
+  margin: 0;
+}

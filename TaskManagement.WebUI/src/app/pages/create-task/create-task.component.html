@@ -1,0 +1,88 @@
+<div class="w-50 m-0">
+  <div class="p-2 m-0 bg-blue-500">
+    <h2 class="text-gray-100 text-center m-0 p-0">Create New Task</h2>
+  </div>
+  <form
+    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+    [formGroup]="createTaskForm"
+    (ngSubmit)="createTask()"
+    novalidate
+  >
+    <div class="mb-4">
+      <label
+        for="description"
+        class="block text-gray-700 text-lg font-bold mb-2"
+      >
+        Description
+      </label>
+      <input
+        type="text"
+        id="description"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        formControlName="description"
+      />
+    </div>
+    <div class="mb-4">
+      <!-- <label
+        for="lastActionDate"
+        class="block text-gray-700 text-lg font-bold mb-2"
+      >
+        Next Action Date
+      </label>
+      <mat-form-field appearance="fill" class="example-form-field">
+        <mat-label>Choose a date</mat-label>
+        <input id="lastActionDate" matInput formControlName="nextActionDate" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="datepicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #datepicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>
+              Apply
+            </button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field> -->
+    </div>
+    <div class="mb-4">
+      <label for="taskType" class="block text-gray-700 text-lg font-bold mb-2">
+        Task Type
+      </label>
+      <mat-form-field appearance="fill">
+        <mat-label>Task Type</mat-label>
+        <mat-select id="taskType" formControlName="type">
+          <mat-option *ngFor="let type of taskTypes" [value]="type.value">
+            {{ type.title }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="mb-4">
+      <label
+        for="assignedUser"
+        class="block text-gray-700 text-lg font-bold mb-2"
+      >
+        Assigned User
+      </label>
+      <mat-form-field appearance="fill">
+        <mat-label>Task Type</mat-label>
+        <mat-select id="assignedUser" formControlName="assignedTo">
+          <mat-option *ngFor="let user of assignableUsers" [value]="user.id">
+            {{ user.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="flex items-center justify-between">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="submit"
+      >
+        Create
+      </button>
+    </div>
+  </form>
+</div>
