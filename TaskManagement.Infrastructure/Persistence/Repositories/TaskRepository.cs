@@ -50,8 +50,8 @@ namespace TaskManagement.Infrastructure.Persistence.Repositories
                     var description = reader.GetString(4);
                     var status = reader.GetInt16(5);
                     var type = reader.GetInt16(6);
-                    var assignedTo = reader.GetGuid(7);
-                    var nextActionDate = reader.GetDateTime(8);
+                    var assignedTo = reader.GetFieldValue<Guid?>(7);
+                    var nextActionDate = reader.GetFieldValue<DateTime?>(8);
 
                     task = new Task(id, createdDate, description, (TaskStatus)status, (TaskType)type, assignedTo, nextActionDate);
                 }
@@ -80,10 +80,10 @@ namespace TaskManagement.Infrastructure.Persistence.Repositories
                     var description = reader.GetString(4);
                     var status = reader.GetInt16(5);
                     var type = reader.GetInt16(6);
-                    var assignedTo = reader.GetGuid(7);
-                    var nextActionDate = reader.GetDateTime(8);
+                    var assignedTo = reader.GetFieldValue<Guid?>(7);
+                    var nextActionDate = reader.GetFieldValue<DateTime?>(8);
 
-                    var task = new Task(id, createdDate, description, (TaskStatus) status, (TaskType) type, null, nextActionDate);
+                    var task = new Task(id, createdDate, description, (TaskStatus) status, (TaskType) type, assignedTo, nextActionDate);
                     tasks.Add(task);
                 }
             }
@@ -103,7 +103,7 @@ namespace TaskManagement.Infrastructure.Persistence.Repositories
             await using var conn = new NpgsqlConnection(connString);
 
             await conn.OpenAsync();
-            await using (var cmd = new NpgsqlCommand("INSERT INTO tasks (id, created_date, required_by_date, description, task_status, type, assigned_to, next_action_date) VALUES ($1, $2, $3, $4 ,$5, $6, $7, $8, $9)", conn))
+            await using (var cmd = new NpgsqlCommand("INSERT INTO tasks (id, created_date, required_by_date, description, task_status, type, assigned_to) VALUES ($1, $2, $3, $4 ,$5, $6, $7)", conn))
             {
                 cmd.Parameters.AddWithValue(task.Id);
                 cmd.Parameters.AddWithValue(task.CreatedDate);
@@ -112,7 +112,6 @@ namespace TaskManagement.Infrastructure.Persistence.Repositories
                 cmd.Parameters.AddWithValue((int) task.Status);
                 cmd.Parameters.AddWithValue((int) task.Type);
                 cmd.Parameters.AddWithValue(userToAssign != null ? userToAssign.Id : DBNull.Value);
-                cmd.Parameters.AddWithValue(task.NextActionDate);
                 await cmd.ExecuteNonQueryAsync();
             }
             await conn.CloseAsync();
@@ -134,7 +133,7 @@ namespace TaskManagement.Infrastructure.Persistence.Repositories
                 cmd.Parameters.AddWithValue((int)task.Status);
                 cmd.Parameters.AddWithValue((int)task.Type);
                 cmd.Parameters.AddWithValue(task.AssignedTo.HasValue ? task.AssignedTo.Value : DBNull.Value);
-                cmd.Parameters.AddWithValue(task.NextActionDate);
+                cmd.Parameters.AddWithValue(task.NextActionDate.HasValue ? task.NextActionDate.Value : DBNull.Value);
                 cmd.Parameters.AddWithValue(task.Id);
                 var result = await cmd.ExecuteNonQueryAsync();
             }

@@ -24,7 +24,7 @@ namespace TaskManagement.Application.Services
         {
             var task = await _taskRepository.GetById(taskId);
 
-            var taskDetailsModel = new TaskDetailsModel(task.Id, task.CreatedDate, task.Description, task.Status, task.Type, task.NextActionDate, task.AssignedTo);
+            var taskDetailsModel = new TaskDetailsModel(task.Id, task.CreatedDate, task.Description, task.Status, task.Type, task.NextActionDate.HasValue ? task.NextActionDate.Value : null, task.AssignedTo);
 
             return taskDetailsModel;
         }
@@ -36,7 +36,7 @@ namespace TaskManagement.Application.Services
 
             foreach(var task in tasks)
             {
-                var taskDetailsModel = new TaskDetailsModel(task.Id, task.CreatedDate, task.Description, task.Status, task.Type, task.NextActionDate, task.AssignedTo);
+                var taskDetailsModel = new TaskDetailsModel(task.Id, task.CreatedDate, task.Description, task.Status, task.Type, task.NextActionDate.HasValue ? task.NextActionDate.Value : null, task.AssignedTo);
                 results.Add(taskDetailsModel);
             }
 
@@ -45,7 +45,7 @@ namespace TaskManagement.Application.Services
 
         public async Task<TaskManagement.Domain.Entities.Task?> Create(CreateTaskRequest request)
         {
-            var task = new TaskManagement.Domain.Entities.Task(request.Description, Domain.Enums.TaskStatus.OPENED, request.Type, request.NextActionDate, request.AssignedTo);
+            var task = new TaskManagement.Domain.Entities.Task(request.Description, Domain.Enums.TaskStatus.OPENED, request.Type, request.RequiredByDate, request.AssignedTo);
 
             await _taskRepository.Insert(task);
 

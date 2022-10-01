@@ -44,9 +44,9 @@ namespace TaskManagement.API.Controllers
 
         [HttpDelete("Delete")]
         [AllowAnonymous]
-        public async Task<IResult> Remove(RemoveCommentRequest request)
+        public async Task<IResult> Remove(Guid taskCommentId)
         {
-            var result = await _taskCommentService.Remove(request);
+            var result = await _taskCommentService.Remove(taskCommentId);
             return Results.Ok(result);
         }
     }

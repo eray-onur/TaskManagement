@@ -19,22 +19,21 @@ namespace TaskManagement.Domain.Entities
         public TaskStatus Status { get; set; }
         public TaskType Type { get; set; }
         public Guid? AssignedTo { get; set; }
-        public DateTime NextActionDate { get; set; }
+        public DateTime? NextActionDate { get; set; }
 
         public List<TaskComment> Comments { get; set; }
 
-        public Task(string description, TaskStatus status, TaskType type, DateTime nextActionDate, Guid? assignedTo = null) : base()
+        public Task(string description, TaskStatus status, TaskType type, DateTime requiredByDate, Guid? assignedTo = null) : base()
         {
             CreatedDate = DateTime.Now;
-
+            RequiredByDate = requiredByDate;
             Description = description;
             Status = status;
             Type = type;
             AssignedTo = assignedTo;
-            NextActionDate = nextActionDate;
         }
 
-        public Task(Guid id, DateTime createdDate, string description, TaskStatus status, TaskType type, Guid? assignedTo, DateTime nextActionDate) : base()
+        public Task(Guid id, DateTime createdDate, string description, TaskStatus status, TaskType type, Guid? assignedTo, DateTime? nextActionDate) : base()
         {
             Id = id;
             CreatedDate = createdDate;

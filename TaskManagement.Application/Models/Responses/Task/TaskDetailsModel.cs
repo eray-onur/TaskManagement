@@ -19,9 +19,9 @@ namespace TaskManagement.Application.Models.Responses.Task
         public TaskStatus Status { get; set; }
         public TaskType Type { get; set; }
         public Guid? AssignedTo { get; set; }
-        public DateTime NextActionDate { get; set; }
+        public DateTime? NextActionDate { get; set; }
 
-        public TaskDetailsModel(Guid id, DateTime createdDate, string description, TaskStatus status, TaskType type, DateTime nextActionDate, Guid? assignedTo = null)
+        public TaskDetailsModel(Guid id, DateTime createdDate, string description, TaskStatus status, TaskType type, DateTime? nextActionDate, Guid? assignedTo = null)
         {
             Id = id;
             CreatedDate = createdDate;

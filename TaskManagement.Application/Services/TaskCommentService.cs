@@ -47,7 +47,7 @@ namespace TaskManagement.Application.Services
             throw new NotImplementedException();
         }
 
-        public async Task<Domain.Entities.TaskComment> Remove(RemoveCommentRequest request)
+        public async Task<Domain.Entities.TaskComment> Remove(Guid taskCommentId)
         {
             throw new NotImplementedException();
         }

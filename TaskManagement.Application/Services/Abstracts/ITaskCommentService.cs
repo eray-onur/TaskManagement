@@ -14,6 +14,6 @@ namespace TaskManagement.Application.Services.Abstracts
         Task<List<TaskCommentDetailsModel>> GetCommentsByTaskId(Guid taskId);
         Task<TaskManagement.Domain.Entities.TaskComment> Create(CreateNewCommentRequest request);
         Task<TaskManagement.Domain.Entities.TaskComment> Update(UpdateCommentRequest request);
-        Task<TaskManagement.Domain.Entities.TaskComment> Remove(RemoveCommentRequest request);
+        Task<TaskManagement.Domain.Entities.TaskComment> Remove(Guid taskCommentId);
     }
 }
